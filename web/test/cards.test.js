@@ -203,7 +203,7 @@ test('스토리 카드: 글자 좌표(날짜 1213, 제목 1269, 구분선 1399, 
       { x: 660, parts: [{ num: '10', unit: '시간' }, { num: '35', unit: '분' }], label: '걸린 시간', baseline: 1495, labelTop: 1522 },
     ],
   });
-  assert.deepEqual(l.footer, { brand: { text: '왔다감', x: 80, y: 1638 }, tagline: { text: '차에서 기록한 여행', x: 1000, y: 1638 } });
+  assert.deepEqual(l.footer, { brand: { text: '왔다감 · Wheel Be Back', x: 80, y: 1638 }, tagline: { text: '차에서 기록한 여행', x: 1000, y: 1638 } });
   assert.equal(l.brand, null);
 });
 
@@ -227,7 +227,7 @@ test('사진 배경 카드: 글자 좌표는 스토리와 같고 경로 상자�
 test('정사각형 카드: 글자·경로 상자 좌표, 숫자 3칸은 x 150–930 안', () => {
   const l = layoutCard(gangneung, 'square', options);
   assert.deepEqual([l.width, l.height], [1080, 1080]);
-  assert.deepEqual(l.brand, { text: '왔다감', x: 120, y: 73 });
+  assert.deepEqual(l.brand, { text: '왔다감 · Wheel Be Back', x: 120, y: 73 });
   assert.deepEqual(l.routeBox, { x: 120, y: 150, width: 840, height: 410 });
   assert.deepEqual(l.date, { text: '11월 7일 (토)', x: 120, y: 613, size: 40 });
   assert.deepEqual(l.title, { size: 68, lines: [{ text: '경포해변 → 강릉중앙시장', x: 120, y: 666 }] });
@@ -285,7 +285,7 @@ test('들른 곳별: 첫 장 머리 띠(날짜, 브랜드, 제목)와 칸 좌표
   assert.deepEqual(page.header, {
     height: 170,
     date: { text: '11월 7일 (토)', x: 60, y: 38 },
-    brand: { text: '왔다감', x: 1020, y: 38 },
+    brand: { text: '왔다감 · Wheel Be Back', x: 1020, y: 38 },
     title: { text: '경포해변 → 강릉중앙시장', x: 60, y: 88, maxWidth: 960 },
   });
   assert.equal(page.band, null);
@@ -313,7 +313,7 @@ test('들른 곳별: 둘째 장부터는 머리 띠 대신 아래 띠와 "2/2"',
   assert.deepEqual(pages.map((p) => p.tiles.map((t) => t.label)), [['1', '2', '3'], ['4', '5']]);
   const second = pages[1];
   assert.equal(second.header, null);
-  assert.deepEqual(second.band, { y: 1230, height: 120, brand: { text: '왔다감', x: 60, y: 1290 }, pill: { text: '2/2', right: 1020, y: 1290, height: 56 } });
+  assert.deepEqual(second.band, { y: 1230, height: 120, brand: { text: '왔다감 · Wheel Be Back', x: 60, y: 1290 }, pill: { text: '2/2', right: 1020, y: 1290, height: 56 } });
   assert.deepEqual(second.tiles.map((t) => [t.y, t.height]), [[0, 613], [617, 613]]);
 });
 
@@ -345,7 +345,7 @@ test('스토리 카드 그리기: 바탕, 경로 선 14, 번호 pill, 숫자·�
   assert.equal(indexOfCall(ctx, ['set', 'lineWidth', 22]), -1);
   const drawn = texts(ctx);
   for (const s of ['1–3', '413', 'km', '3', '곳', '10', '시간', '35', '분', '달린 거리', '들른 곳', '걸린 시간',
-    '11월 7일 (토)', '경포해변 → 강릉중앙시장', '왔다감', '차에서 기록한 여행']) {
+    '11월 7일 (토)', '경포해변 → 강릉중앙시장', '왔다감 · Wheel Be Back', '차에서 기록한 여행']) {
     assert.ok(drawn.includes(s), `"${s}" 를 그리지 않았다`);
   }
   assert.equal(ctx.calls.some((c) => c[0] === 'drawImage'), false);
@@ -380,7 +380,7 @@ test('들른 곳별 그리기: 머리 띠 글자, 사진이 있는 칸만 사진
   near(images[0][2], 0); near(images[0][3], 1186.111, 0.001); near(images[0][4], 3000); near(images[0][5], 1627.778, 0.001);
   assert.deepEqual(images[0].slice(6), [0, 170, 1080, 586]);
   const drawn = texts(ctx);
-  for (const s of ['11월 7일 (토)', '왔다감', '경포해변 → 강릉중앙시장', '1', '2', '3', '경포해변', '안목해변 카페', '강릉중앙시장',
+  for (const s of ['11월 7일 (토)', '왔다감 · Wheel Be Back', '경포해변 → 강릉중앙시장', '1', '2', '3', '경포해변', '안목해변 카페', '강릉중앙시장',
     '11:20 – 12:40 · 1시간 20분', '비']) {
     assert.ok(drawn.includes(s), `"${s}" 를 그리지 않았다`);
   }
@@ -394,6 +394,6 @@ test('들른 곳별 그리기: 둘째 장 아래 띠에 브랜드와 "2/2"', () 
   drawStopPage(ctx, pages[1], []);
   const drawn = texts(ctx);
   assert.ok(drawn.includes('2/2'));
-  assert.ok(drawn.includes('왔다감'));
+  assert.ok(drawn.includes('왔다감 · Wheel Be Back'));
   assert.ok(drawn.includes('장소3'));
 });

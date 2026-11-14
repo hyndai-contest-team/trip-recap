@@ -12,6 +12,8 @@ export const CARD_SIZES = {
   square: { width: 1080, height: 1080 },
 };
 export const STOP_PAGE_SIZE = { width: 1080, height: 1350 };
+/** 공유 이미지에 넣는 앱 이름과 영어 부제 */
+export const BRAND = '왔다감 · Wheel Be Back';
 
 export const COLORS = {
   background: '#131417',
@@ -205,7 +207,7 @@ const CARD_SPECS = {
     routeBox: { x: 120, y: 150, width: 840, height: 410 },
     routePadding: 50,
     style: { lineWidth: 14, underWidth: 0, dotRadius: 34, dotFont: 40, briefRadius: 12, briefStroke: 6, briefStrokeColor: '#131417', shadow: false },
-    brand: { text: '왔다감', x: 120, y: 73 },
+    brand: { text: BRAND, x: 120, y: 73 },
     text: {
       left: 120,
       right: 960,
@@ -331,7 +333,7 @@ export function layoutCard(trip, kind, { measure, nowMinute }) {
     divider: { x1: t.left, x2: t.right, y: t.dividerY },
     stats: layoutStats(trip, t.stats, measure),
     footer: footerY === null ? null : {
-      brand: { text: '왔다감', x: t.left, y: footerY },
+      brand: { text: BRAND, x: t.left, y: footerY },
       tagline: { text: '차에서 기록한 여행', x: t.right, y: footerY },
     },
   };
@@ -409,13 +411,13 @@ export function layoutStopPages(trip, { nowMinute, hasPhoto = () => false, perPa
       header: first ? {
         height: STOP_HEADER_HEIGHT,
         date: { text: formatDate(trip.startMinute, nowMinute), x: 60, y: 38 },
-        brand: { text: '왔다감', x: width - 60, y: 38 },
+        brand: { text: BRAND, x: width - 60, y: 38 },
         title: { text: trip.title || '여행', x: 60, y: 88, maxWidth: width - 120 },
       } : null,
       band: first ? null : {
         y: height - STOP_BAND_HEIGHT,
         height: STOP_BAND_HEIGHT,
-        brand: { text: '왔다감', x: 60, y: height - STOP_BAND_HEIGHT / 2 },
+        brand: { text: BRAND, x: 60, y: height - STOP_BAND_HEIGHT / 2 },
         pill: { text: `${index + 1}/${total}`, right: width - 60, y: height - STOP_BAND_HEIGHT / 2, height: 56 },
       },
       tiles,

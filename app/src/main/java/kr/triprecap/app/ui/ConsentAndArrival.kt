@@ -51,6 +51,8 @@ fun ConsentScreen(onAgree: () -> Unit) {
         Column(Modifier.fillMaxSize().padding(start = if (narrow) 32.dp else 72.dp, end = if (narrow) 32.dp else 72.dp, top = 40.dp, bottom = 56.dp)) {
             Column(Modifier.weight(1f).widthIn(max = ConsentWidth).verticalScroll(rememberScrollState())) {
                 Text("왔다감", style = AppNameStyle, color = PleosColor.Accent)
+                Spacer(Modifier.height(4.dp))
+                Text("Wheel Be Back", style = PleosType.Body26, color = PleosColor.Text72)
                 Spacer(Modifier.height(16.dp))
                 Text(
                     "여행을 다녀오면 들른 곳과\n머문 시간이 차에 정리돼요",
