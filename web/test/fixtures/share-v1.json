@@ -1,0 +1,45 @@
+{
+ "comment": "ShareCodec(Kotlin)이 만든 hash 와, 여행 입력값에서 손으로 적은 기대 결과. codec.js 가 이 hash 를 expected 로 풀어야 한다. 좌표는 시험용 근사값이다. route 첫 점(37.5199, 127.1059)은 송파구청 근처 공공 지점이고 개인 위치가 아니다. 좌표를 바꾸면 hash 도 바뀐다.",
+ "hash": "AYr7oA6bC7QSAwzqsr3tj6ztlbTrs4ACAJKTLv6tnQGCAVAM6rK97Y-s7ZW067OABo8FuAbrAbAJBuyImeyGjAO-5i2mlJsB1CzYmQKPBbgG",
+ "expected": {
+  "title": "경포해변",
+  "startMinute": 29900170,
+  "durationMinutes": 1435,
+  "distanceM": 235600,
+  "people": 3,
+  "stops": [
+   {
+    "kind": "VISIT",
+    "rainy": false,
+    "lat": 37.8057,
+    "lon": 128.9087,
+    "arriveMinute": 29900300,
+    "stayMinutes": 80,
+    "name": "경포해변"
+   },
+   {
+    "kind": "LODGING",
+    "rainy": true,
+    "lat": 37.7729,
+    "lon": 128.9499,
+    "arriveMinute": 29900405,
+    "stayMinutes": 1200,
+    "name": "숙소"
+   }
+  ],
+  "route": [
+   [
+    37.5199,
+    127.1059
+   ],
+   [
+    37.8057,
+    128.9087
+   ],
+   [
+    37.7729,
+    128.9499
+   ]
+  ]
+ }
+}

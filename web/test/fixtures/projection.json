@@ -1,0 +1,50 @@
+{
+ "comment": "RouteProjection(Kotlin)과 projection.js 가 같은 결과를 내는지 비교하는 입력과 기대값. 두 구현의 ln(tan(φ) + sec(φ)) 대신 같은 값인 asinh(tan(φ)) 로 따로 계산해 소수 둘째 자리에서 반올림했다. 계산: points 의 [위도, 경도]를 Web Mercator 단위 좌표 mx = (경도 + 180) / 360, my = (1 - asinh(tan(φ)) / π) / 2 (φ 는 위도 라디안)로 바꾼다. 다섯 점의 mx·my 최솟값·최댓값으로 dx = maxX - minX, dy = maxY - minY 를 구하고, scale = min((width - 2·padding) / dx, (height - 2·padding) / dy), offX = (width - dx·scale) / 2, offY = (height - dy·scale) / 2 로 둔다. 기대값은 [offX + (mx - minX)·scale, offY + (my - minY)·scale] 이다. 두 테스트는 0.005 이내로 비교한다. 입력 점은 차례로 집(송파구청 근처 공공 지점의 근사값), 경포해변, 안목해변 카페, 강릉중앙시장, 횡성휴게소이고 GoldenScenarios 의 강릉 당일 좌표와 같다.",
+ "width": 1080.0,
+ "height": 1080.0,
+ "padding": 120.0,
+ "points": [
+  [
+   37.5145,
+   127.1059
+  ],
+  [
+   37.8057,
+   128.9087
+  ],
+  [
+   37.7729,
+   128.9499
+  ],
+  [
+   37.7553,
+   128.8963
+  ],
+  [
+   37.4783,
+   127.9989
+  ]
+ ],
+ "expected": [
+  [
+   120.0,
+   613.39
+  ],
+  [
+   941.23,
+   445.83
+  ],
+  [
+   960.0,
+   464.73
+  ],
+  [
+   935.58,
+   474.87
+  ],
+  [
+   526.79,
+   634.17
+  ]
+ ]
+}
