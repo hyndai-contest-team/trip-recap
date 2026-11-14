@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Pleos Vehicle SDK (조회·구독만, 차량 제어 없음) -->
+    <!-- 기어(P/D): 여행 시작·종료와 방문지 판정 -->
+    <uses-permission android:name="pleos.car.permission.CAR_DRIVE" />
+    <!-- 도어 열림: P단에서 문이 열려야 방문지로 본다 -->
+    <uses-permission android:name="pleos.car.permission.CAR_DOORS" />
+    <!-- 좌석 탑승 감지: 드라이브별 탑승 좌석 기록(동승 인원) -->
+    <uses-permission android:name="pleos.car.permission.CAR_SEATS" />
+    <!-- 와이퍼 상태: 구간 날씨(비) 기록 -->
+    <uses-permission android:name="pleos.car.permission.CAR_WINDOWS" />
+    <!-- Pleos NaviHelper SDK: 목적지·즐겨찾기(HOME·OFFICE)·현재 위치 조회 → 정차 이름, 출퇴근·숙박 판정, 위치 대체 경로 -->
+    <uses-permission android:name="pleos.car.permission.NAVI_ROUTE" />
+    <!-- Pleos NaviHelper SDK: 경로 안내 요청(requestRoute, requestRouteWithWaypoints) -->
+    <uses-permission android:name="pleos.car.permission.NAVI_ROUTE_SEARCH" />
+    <!-- Pleos FusedLocation SDK: 방문지 좌표 (dangerous → 런타임 요청) -->
+    <uses-permission android:name="pleos.car.permission.FUSED_LOCATION" />
+    <!-- Pleos TTS/STT SDK (ON_DEVICE 모드, 앱 등록 불필요) -->
+    <uses-permission android:name="pleos.car.permission.TTS_SERVICE" />
+    <uses-permission android:name="pleos.car.permission.STT_SERVICE" />
+    <!-- AAOS CarPropertyManager: 시동 상태(IGNITION_STATE) → 드라이브 종료 판정, 기어(GEAR_SELECTION) 대체 경로 -->
+    <uses-permission android:name="android.car.permission.CAR_POWERTRAIN" />
+    <!-- AAOS CarPropertyManager: 차속(PERF_VEHICLE_SPEED), 기어 신호가 없을 때 드라이브 판정 (dangerous → 런타임 요청) -->
+    <uses-permission android:name="android.car.permission.CAR_SPEED" />
+    <!-- AAOS CarPropertyManager: 외기온(ENV_OUTSIDE_TEMPERATURE), 방문지 카드에 기온 표시. 지원하지 않는 차에서는 기록하지 않는다 -->
+    <uses-permission android:name="android.car.permission.CAR_EXTERIOR_ENVIRONMENT" />
+
+    <!-- 카카오 로컬 API 로 방문지 좌표의 장소 이름을 조회한다. 보내는 값은 좌표뿐이다 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 화면이 꺼져 있어도 여행 기록을 이어 가는 Foreground Service -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- 시동을 켜면 앱을 열지 않아도 기록을 시작한다 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-feature android:name="android.hardware.type.automotive" android:required="true" />
+
+    <application
+        android:name=".TripRecapApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TripRecap">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:resizeableActivity="true"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden|density|uiMode">
+            <!-- 주행 중에는 한 줄 상태와 숫자 2개만 표시하고 터치를 받지 않는다 -->
+            <meta-data android:name="distractionOptimized" android:value="true" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".service.TripRecordingService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE" android:value="vehicle trip recording" />
+        </service>
+
+        <receiver android:name=".service.BootReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

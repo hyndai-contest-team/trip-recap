@@ -1,0 +1,28 @@
+# Gradle / Android
+.gradle/
+build/
+local.properties
+.kotlin/
+.idea/
+*.iml
+captures/
+*.apk
+*.aab
+# Gradle wrapper jar는 커밋한다
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+# macOS
+.DS_Store
+# 로그
+*.log
+# 제출하지 않는 메모
+docs/private/
+# 서명 키·비밀 값·덤프
+*.jks
+*.keystore
+keystore.properties
+app/release/
+*.hprof
+*.apks
+.env
+.env.*
