@@ -1,4 +1,4 @@
-# 왔다감(가제) — 여행 단위 자동 기록 (Pleos Connect)
+# 왔다감 · Wheel Be Back — 여행 단위 자동 기록 (Pleos Connect)
 
 여행이 끝나면 들른 곳·머문 시간·비·동승 인원이 정리된 여행 1건이 차에 남는다. 검색해서 다시 찾고, QR 로 휴대폰에 보내 사진을 붙이고, 같은 코스로 다시 갈 수 있다.
 현대자동차그룹 차량용 앱 개발 공모전 출품용이다. 기획은 `docs/product-plan.md`, 에뮬레이터 확인 기록은 `docs/verification-2026-11-11.md`(시안 v3 적용 직후 화면, 11-11)와 `docs/verification-2026-11-10.md`(SDK 어댑터), `docs/verification-2026-11-13.md`(Virtual Console 로 넣은 실제 신호, 판정 3단계, 외기온 표시와 기간 검색)에 있다.
