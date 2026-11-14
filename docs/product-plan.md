@@ -171,7 +171,7 @@
 | 항목 | 결정 | 구현·남은 일 |
 |---|---|---|
 | 앱 이름 | 가제 **왔다감**. repo 이름 `trip-recap`, 패키지 `kr.triprecap.app`은 유지 | `strings.xml`의 `app_name`을 "왔다감"으로 바꿨다 |
-| 휴대폰 공유 페이지 호스팅 | **GitHub Pages가 아닌 별도 정적 호스팅**(Netlify, Cloudflare Pages 등) | 서비스는 E1 시작 때 고른다. 호스팅 계정은 개발자가 만든다. 페이지는 정적 파일만, 서버가 hash 데이터를 받지 않는 구조를 유지 |
+| 휴대폰 공유 페이지 호스팅 | **GitHub Pages가 아닌 별도 정적 호스팅**(Netlify, Cloudflare Pages 등) | Cloudflare Pages 에 배포했다(2026-11-14). 페이지는 정적 파일만, 서버가 hash 데이터를 받지 않는 구조를 유지 |
 | 지도 | **지도 타일 없이 경로 선만** 그린다. 차 화면(상세)과 휴대폰 공유 카드 모두 같은 방식. 공유 카드는 경로 선 + 사진 + 숫자로 구성한다 | 차: `ui/RouteCanvas`가 `domain/RouteProjection`(Web Mercator)으로 투영해 선과 방문지 점을 그린다. 휴대폰: `web/js/projection.js`가 같은 투영으로 HTML canvas에 그린다. 두 구현은 `web/test/fixtures/projection.json`의 같은 입력으로 결과를 비교한다 |
 | 장소 이름 | **카카오 로컬 API**(좌표 → 주변 POI, 좌표 → 행정구역). 내비 목적지 이름이 있으면 그것을 먼저 쓴다 | REST API 키는 개발자가 카카오 개발자 콘솔에서 발급한다(2026-11-14 기준 미발급). 키는 repo에 넣지 않고 `local.properties`(git 제외)의 `kakao.restApiKey`를 `BuildConfig`로 읽는다. 인터넷이 없으면 "방문지 n"으로 저장 후 재조회 |
 | 저장소 | 공모전 제출용 private GitHub 저장소에 올린다 (2026-11-14) | |

@@ -119,7 +119,8 @@ tools/vconsole.sh visit                    # 방문지 1개 만들기: 주행 60
 차량 제어 API 는 쓰지 않는다. 저장은 기기 안 Room DB 이고 `allowBackup=false` 다.
 
 ## 아직 하지 않은 것
-- 카카오 키·공유 페이지 호스팅 주소 발급, 그 뒤 실제 호출·QR 왕복 확인
+- 카카오 키 발급과 실제 호출 확인
+- 휴대폰 카메라로 QR 을 찍어 여는 것(QR 해독과 페이지 열기는 PC 에서 확인했다. `docs/verification-2026-11-13.md` 4부)
 - 내비 경로 요청(`requestRoute`, `requestRouteWithWaypoints`) 실제 호출 확인
 - 시나리오 경로를 실제 도로 형상으로 교체 (지금은 주요 지점을 직선으로 이은 근사 경로)
 - 주행 중 CPU 5%·RAM 측정, release 서명 APK, 이용약관·개인정보처리방침 URL
