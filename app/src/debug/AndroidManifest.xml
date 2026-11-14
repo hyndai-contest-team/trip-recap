@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- debug 빌드 전용: adb 로 시나리오 재생을 조작하는 수신기. release 에는 들어가지 않는다. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- DUMP 권한은 adb shell 만 가진다 → 다른 앱은 보낼 수 없다 -->
+        <receiver
+            android:name=".DebugScenarioReceiver"
+            android:exported="true"
+            android:permission="android.permission.DUMP">
+            <intent-filter>
+                <action android:name="kr.triprecap.app.DEBUG_SCENARIO" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
