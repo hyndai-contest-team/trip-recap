@@ -1,25 +1,38 @@
 # 왔다감 · Wheel Be Back — 여행 단위 자동 기록 (Pleos Connect)
 
-여행이 끝나면 들른 곳·머문 시간·비·동승 인원이 정리된 여행 1건이 차에 남는다. 검색해서 다시 찾고, QR 로 휴대폰에 보내 사진을 붙이고, 같은 코스로 다시 갈 수 있다.
-현대자동차그룹 차량용 앱 개발 공모전 출품용이다. 기획은 `docs/product-plan.md`, 에뮬레이터 확인 기록은 `docs/verification-2026-11-11.md`(시안 v3 적용 직후 화면, 11-11)와 `docs/verification-2026-11-10.md`(SDK 어댑터), `docs/verification-2026-11-13.md`(Virtual Console 로 넣은 실제 신호, 판정 3단계, 외기온 표시와 기간 검색)에 있다.
-repo 이름 `trip-recap`, 패키지 `kr.triprecap.app` 은 그대로 쓴다.
+## 1. 앱 이름과 한 줄 소개
+**왔다감 (Wheel Be Back)**: 기어·도어·좌석 같은 차량 신호로 여행을 자동으로 기록해, 휴대폰으로 사진을 지정해 공유하고 같은 코스로 다시 안내 받을 수 있는 앱이다.
 
-## 제출 APK와 테스트 환경
-| 항목 | 내용 |
-|---|---|
-| APK | [`apk/tridrive_왔다감_release.apk`](apk/) (팀 tridrive, release 빌드, 서명함, versionName 0.2.0, 47MB) |
-| 에뮬레이터 | Pleos Connect Emulator v2.1.0 (`system-images;android-34;pleos_car_emulator;arm64-v8a`, Android 14 / API 34) |
-| 화면 규격 | 2560x1440, 160dpi. 앱 창은 1682x1210 (화면 왼쪽 차량 패널과 아래 공조 막대를 뺀 영역) |
-| 최소·대상 SDK | minSdk 28, targetSdk 35 |
+여행이 끝나면 들른 곳·머문 시간·비·동승 인원이 정리된 여행 1건이 차에 남는다. 현대자동차그룹 차량용 앱 개발 공모전(팀 tridrive) 출품작이다.
+- 앱 프로젝트 소개(접수양식 02): `docs/app/project-intro.md`
+- 기획: `docs/product-plan.md`
+- 에뮬레이터 확인 기록: `docs/verification-2026-11-10.md`(SDK 어댑터), `docs/verification-2026-11-11.md`(시안 v3 화면), `docs/verification-2026-11-13.md`(Virtual Console 실제 신호, 판정 3단계, 외기온, 기간 검색)
+- repo 이름 `trip-recap`, 패키지 `kr.triprecap.app` 은 그대로 쓴다.
 
-설치와 실행:
+## 2. 실행 방법
 ```sh
 adb install -g apk/tridrive_왔다감_release.apk     # -g: 위치·차속 등 런타임 권한을 설치 때 허용
 adb shell am start -n kr.triprecap.app/.MainActivity
 ```
 1. 처음 실행하면 동의 화면이 나온다. [동의하고 시작하기]를 누르면 빈 목록이 나오고 백그라운드 기록이 시작된다.
 2. release 빌드는 차량 신호로만 기록한다. 에뮬레이터에서는 아래 "실제 신호 넣기"의 Virtual Console 로 기어·속도·도어·위치를 바꿔 드라이브와 방문지를 만든다.
-3. 시연 시나리오 재생(강릉 당일 등 9개)과 시연 여행 넣기는 debug 빌드에만 있다(`./gradlew assembleDebug`, 아래 "시연 조작").
+3. 시연 시나리오 재생(강릉 당일 등 9개)과 시연 여행 넣기는 debug 빌드에만 있다(아래 "빌드·테스트·실행", "시연 조작").
+
+## 3. 테스트 환경과 필요한 설정
+| 항목 | 내용 |
+|---|---|
+| 에뮬레이터 | Pleos Connect Emulator v2.1.0 (`system-images;android-34;pleos_car_emulator;arm64-v8a`, Android 14 / API 34). cold boot 로 띄운다 |
+| 최소·대상 SDK | minSdk 28, targetSdk 35 |
+| 권한 | 위치·차속 런타임 권한(`adb install -g` 로 허용). 그 밖의 차량 권한은 아래 "SDK·권한" 표 |
+| 네트워크 | 장소 이름 조회(카카오 로컬 API)에 인터넷 연결이 필요하다. 연결이 없으면 "방문지 n"으로 저장하고 나중에 다시 조회한다 |
+| 소스 빌드 | JDK·Gradle·SDK 버전과 `local.properties` 값은 아래 "빌드·테스트·실행" |
+
+## 4. 개발에 사용한 에뮬레이터 버전과 화면 규격
+- Pleos Connect Emulator v2.1.0
+- 화면 2560x1440, 160dpi. 앱 창은 1682x1210 (화면 왼쪽 차량 패널과 아래 공조 막대를 뺀 영역)
+
+## 5. APK 위치
+[`apk/tridrive_왔다감_release.apk`](apk/) — release 빌드, 서명함, versionName 0.2.0, 47MB
 
 ## 동작 규칙 (수치는 단위 테스트로 고정)
 | 항목 | 규칙 | 코드 |
@@ -91,7 +104,7 @@ tools/smoke-test.sh              # 실행 중인 에뮬레이터에서 주요 �
 `local.properties`(git 제외)에 넣는 값:
 ```
 kakao.restApiKey=<카카오 개발자 콘솔 REST API 키>     # 없으면 장소 이름이 "방문지 n"으로 남는다
-share.baseUrl=<휴대폰 공유 페이지 주소, 끝에 />        # 없으면 QR 이 열리지 않는다
+share.baseUrl=<휴대폰 공유 페이지 주소, 끝에 />        # 없으면 https://trip-recap.pages.dev/
 ```
 
 ## 시연 조작 (debug 빌드)

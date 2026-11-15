@@ -26,8 +26,8 @@ android {
         versionName = "0.2.0"
         // 카카오 로컬 REST API 키 (kakao.restApiKey). 없으면 장소 이름을 "방문지 n"으로 저장한다
         buildConfigField("String", "KAKAO_REST_API_KEY", "\"${localProps.getProperty("kakao.restApiKey", "")}\"")
-        // 휴대폰 공유 페이지 주소 (share.baseUrl, 예: https://example.pages.dev/)
-        buildConfigField("String", "SHARE_BASE_URL", "\"${localProps.getProperty("share.baseUrl", "")}\"")
+        // 휴대폰 공유 페이지 주소. 비밀 값이 아니므로 배포 주소를 기본값으로 둔다. local.properties 의 share.baseUrl 이 있으면 그 값을 쓴다
+        buildConfigField("String", "SHARE_BASE_URL", "\"${localProps.getProperty("share.baseUrl", "https://trip-recap.pages.dev/")}\"")
     }
 
     // release 서명 키는 repo 에 넣지 않는다. keystore.properties(git 제외)에 storeFile·storePassword·keyAlias·keyPassword 를 둔다.
