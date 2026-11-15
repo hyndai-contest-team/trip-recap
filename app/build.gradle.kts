@@ -30,9 +30,27 @@ android {
         buildConfigField("String", "SHARE_BASE_URL", "\"${localProps.getProperty("share.baseUrl", "")}\"")
     }
 
+    // release 서명 키는 repo 에 넣지 않는다. keystore.properties(git 제외)에 storeFile·storePassword·keyAlias·keyPassword 를 둔다.
+    // 파일이 없으면 release APK 는 서명 없이 만들어진다(설치할 수 없다)
+    val keystoreProps = Properties().apply {
+        val f = rootProject.file("keystore.properties")
+        if (f.exists()) f.inputStream().use { load(it) }
+    }
+    signingConfigs {
+        if (keystoreProps.getProperty("storeFile") != null) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfigs.findByName("release")?.let { signingConfig = it }
         }
     }
     compileOptions {

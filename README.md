@@ -4,6 +4,23 @@
 현대자동차그룹 차량용 앱 개발 공모전 출품용이다. 기획은 `docs/product-plan.md`, 에뮬레이터 확인 기록은 `docs/verification-2026-11-11.md`(시안 v3 적용 직후 화면, 11-11)와 `docs/verification-2026-11-10.md`(SDK 어댑터), `docs/verification-2026-11-13.md`(Virtual Console 로 넣은 실제 신호, 판정 3단계, 외기온 표시와 기간 검색)에 있다.
 repo 이름 `trip-recap`, 패키지 `kr.triprecap.app` 은 그대로 쓴다.
 
+## 제출 APK와 테스트 환경
+| 항목 | 내용 |
+|---|---|
+| APK | [`apk/tridrive_왔다감_release.apk`](apk/) (팀 tridrive, release 빌드, 서명함, versionName 0.2.0, 47MB) |
+| 에뮬레이터 | Pleos Connect Emulator v2.1.0 (`system-images;android-34;pleos_car_emulator;arm64-v8a`, Android 14 / API 34) |
+| 화면 규격 | 2560x1440, 160dpi. 앱 창은 1682x1210 (화면 왼쪽 차량 패널과 아래 공조 막대를 뺀 영역) |
+| 최소·대상 SDK | minSdk 28, targetSdk 35 |
+
+설치와 실행:
+```sh
+adb install -g apk/tridrive_왔다감_release.apk     # -g: 위치·차속 등 런타임 권한을 설치 때 허용
+adb shell am start -n kr.triprecap.app/.MainActivity
+```
+1. 처음 실행하면 동의 화면이 나온다. [동의하고 시작하기]를 누르면 빈 목록이 나오고 백그라운드 기록이 시작된다.
+2. release 빌드는 차량 신호로만 기록한다. 에뮬레이터에서는 아래 "실제 신호 넣기"의 Virtual Console 로 기어·속도·도어·위치를 바꿔 드라이브와 방문지를 만든다.
+3. 시연 시나리오 재생(강릉 당일 등 9개)과 시연 여행 넣기는 debug 빌드에만 있다(`./gradlew assembleDebug`, 아래 "시연 조작").
+
 ## 동작 규칙 (수치는 단위 테스트로 고정)
 | 항목 | 규칙 | 코드 |
 |---|---|---|
@@ -123,6 +140,7 @@ tools/vconsole.sh visit                    # 방문지 1개 만들기: 주행 60
 - 휴대폰 카메라로 QR 을 찍어 여는 것(QR 해독과 페이지 열기는 PC 에서 확인했다. `docs/verification-2026-11-13.md` 4부)
 - 내비 경로 요청(`requestRoute`, `requestRouteWithWaypoints`) 실제 호출 확인
 - 시나리오 경로를 실제 도로 형상으로 교체 (지금은 주요 지점을 직선으로 이은 근사 경로)
-- 주행 중 CPU 5%·RAM 측정, release 서명 APK, 이용약관·개인정보처리방침 URL
+- 주행 중 CPU 5%·RAM 측정, 이용약관·개인정보처리방침 URL
+- release APK 로 Virtual Console 신호를 넣어 방문지를 만드는 것 (release APK 는 2026-11-15 에 설치, 동의, 빈 목록까지 확인했다)
 - 휴대폰 페이지 실기기 확인(iOS Safari, Android Chrome)
 - 에뮬레이터에서 아직 보지 못한 화면: 좁은 창(841px), 동의, 기록을 껐을 때의 주행 중 화면, 알림 위치, 눌림 효과, 메모 말하기 (`docs/verification-2026-11-11.md`)

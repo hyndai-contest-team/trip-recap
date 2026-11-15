@@ -26,3 +26,5 @@ app/release/
 *.apks
 .env
 .env.*
+# 공모전 제출 APK(apk/)는 커밋한다
+!apk/*.apk
