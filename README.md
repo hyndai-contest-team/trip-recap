@@ -66,7 +66,7 @@ export ANDROID_HOME=<Android SDK 경로>
 export PATH="$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
 ```
 ```sh
-./gradlew testDebugUnitTest      # Kotlin 단위 테스트 398개 (Room 은 Robolectric)
+./gradlew testDebugUnitTest      # Kotlin 단위 테스트 406개 (Room 은 Robolectric)
 node --test web/test/            # 휴대폰 페이지 테스트 105개
 ./gradlew assembleDebug
 tools/smoke-test.sh              # 실행 중인 에뮬레이터에서 주요 화면 캡처 (터치 좌표는 화면 코드의 dp 수치로 계산한 값. 에뮬레이터에서 실행해 확인하지는 않았다)
